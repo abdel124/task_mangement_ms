@@ -9,6 +9,7 @@ npm-debug.log*
 # Environment variables
 .env
 
+terraform/rds-postgres/.terraform/
 # Build output
 dist/
 build/
