@@ -16,7 +16,6 @@ build/
 
 # Dependency directories
 bower_components/
-
 # IDE configurations
 .idea/
 .vscode/
