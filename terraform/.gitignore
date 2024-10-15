@@ -1,0 +1,48 @@
+# Node modules
+node_modules/
+.terraform/
+**/.terraform/
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+
+# Build output
+dist/
+build/
+
+# Dependency directories
+bower_components/
+
+# IDE configurations
+.idea/
+.vscode/
+
+# Terraform files
+
+*.tfstate
+*.tfstate.*
+
+*.tfvars
+*.tfplan
+
+# MongoDB data files (if any)
+data/
+*.lock
+
+# Coverage directory for testing
+coverage/
+*.lcov
+
+# Test output
+#test/
+#tests/
+
+# Docker files
+docker-compose.override.yml
+
+# Miscellaneous
+*.DS_Store
