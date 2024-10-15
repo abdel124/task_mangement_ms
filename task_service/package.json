@@ -1,0 +1,19 @@
+{
+    "name": "task-service",
+    "version": "1.0.0",
+    "main": "app/app.js",
+    "scripts": {
+      "start": "node app/app.js",
+      "test": "jest"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongoose": "^5.12.3",
+      "dotenv": "^8.2.0"
+    },
+    "devDependencies": {
+      "jest": "^26.6.0",
+      "supertest": "^6.1.0"
+    }
+  }
+  
