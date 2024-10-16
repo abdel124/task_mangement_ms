@@ -23,6 +23,11 @@ variable "db_username" {
   type        = string
 }
 
+variable "db_port" {
+  description = "Master DB username"
+  type        = string
+}
+
 variable "db_password" {
   description = "Master DB password"
   type        = string
