@@ -137,7 +137,7 @@ resource "aws_iam_role_policy_attachment" "rds_monitoring_role_policy" {
 #   #depends_on = [postgresql_database.mydb]
 
 #   provisioner "local-exec" {
-#     command = "docker run  --rm -e PGPASSWORD=${var.db_password} postgres psql -h terraform-20241016044451616900000002.cn3o6hiyovhm.us-west-2.rds.amazonaws.com  -U ${var.db_username} -d ${var.db_name} -f /tmp/init_users.sql"
+#     command = "docker run  --rm -e PGPASSWORD=${var.db_password} postgres psql -h ${replace(aws_db_instance.postgresql.endpoint, ":5432", "")}  -U ${var.db_username} -d ${var.db_name} -f /tmp/init_users.sql"
 #     environment = {
 #       PGPASSWORD = "SuperSecretPassword!"
 #     }
