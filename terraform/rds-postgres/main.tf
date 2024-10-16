@@ -1,7 +1,44 @@
+terraform {
+  required_providers {
+    postgresql = {
+      source  = "cyrilgdn/postgresql"
+      version = "~> 1.23.0" # specify the version you want to use
+    }
+  }
+}
+
 provider "aws" {
   region = "us-west-2"  # Replace with your desired AWS region
   profile = "default"
 }
+
+provider "postgresql" {
+  host     = replace(aws_db_instance.postgresql.endpoint, ":5432", "")
+  port     = 5432
+  username = var.db_username
+  password = var.db_password
+  database = var.db_name
+}
+
+# resource "postgresql_database" "mydb" {
+#   name = var.db_name
+# }
+
+# resource "postgresql_role" "myrole" {
+#   name     = var.db_username
+#   password = var.db_password
+# }
+
+# resource "postgresql_grant" "mygrant" {
+#   database    = var.db_name
+#   role        = var.db_username  # The role/user to whom you are granting permissions
+#   object_type = "table"          # Specify the object type (e.g., table, schema)
+#   objects     = [                  # List of objects to which permissions apply
+#     "users"             # Replace with your actual table name
+#   ]
+#   privileges  = ["ALL"]  # Specify the privileges to grant
+# }
+
 
 # Create a security group for the RDS instance
 resource "aws_security_group" "rds_sg" {
@@ -70,6 +107,10 @@ resource "aws_db_instance" "postgresql" {
   }
 }
 
+output "db_endpoint" {
+  value = replace(aws_db_instance.postgresql.endpoint, ":5432", "")
+}
+
 # Create an IAM role for RDS enhanced monitoring
 resource "aws_iam_role" "rds_monitoring_role" {
   name = "rds-monitoring-role"
@@ -91,3 +132,15 @@ resource "aws_iam_role_policy_attachment" "rds_monitoring_role_policy" {
   role       = aws_iam_role.rds_monitoring_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
 }
+
+# resource "null_resource" "init_users_table" {
+#   #depends_on = [postgresql_database.mydb]
+
+#   provisioner "local-exec" {
+#     command = "docker run  --rm -e PGPASSWORD=${var.db_password} postgres psql -h terraform-20241016044451616900000002.cn3o6hiyovhm.us-west-2.rds.amazonaws.com  -U ${var.db_username} -d ${var.db_name} -f /tmp/init_users.sql"
+#     environment = {
+#       PGPASSWORD = "SuperSecretPassword!"
+#     }
+#     #working_dir = "${path.module}"
+#   }
+# }
